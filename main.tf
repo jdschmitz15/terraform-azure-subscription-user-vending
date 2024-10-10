@@ -1,11 +1,43 @@
+terraform {
+  required_providers {
+    azapi = {
+      source  = "azure/azapi"
+      version = ">= 1.0.0"  # Update this to the latest version if needed
+    }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 3.0.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = ">= 2.0.0"
+    }
+  }
+}
+
 provider "azurerm" {
   features {}
-
-  tenant_id       = var.tenant_id
   subscription_id = var.subscription_id
-  client_id       = var.client_id
-  client_secret   = var.client_secret
+  client_id     = var.client_id      # Azure AD Application Client ID
+  client_secret = var.client_secret  # Azure AD Application Client Secret
+  tenant_id     = var.tenant_id      # Azure AD Tenant ID
+  use_cli       = false
 }
+
+provider "azuread" {
+  client_id     = var.client_id      # Azure AD Application Client ID
+  client_secret = var.client_secret  # Azure AD Application Client Secret
+  tenant_id     = var.tenant_id      # Azure AD Tenant ID
+  use_cli       = false
+}
+
+provider "azapi" {
+  client_id     = var.client_id      # Azure AD Application Client ID
+  client_secret = var.client_secret  # Azure AD Application Client Secret
+  tenant_id     = var.tenant_id      # Azure AD Tenant ID
+  use_cli       = false
+}
+
 
 resource "random_id" "randomsubscription" {
   byte_length = 8
