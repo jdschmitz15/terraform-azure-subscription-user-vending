@@ -91,7 +91,7 @@ resource "azuread_user" "new_user" {
 
 resource "random_password" "new_user_password" {
   length  = 16
-  special = true
+  special = false
 }
 
 # Add data resource for subscription
