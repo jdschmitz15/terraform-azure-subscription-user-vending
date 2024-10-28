@@ -6,11 +6,11 @@ terraform {
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 3.0.0"
+      version = "= 4.4.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = ">= 2.0.0"
+      version = "= 3.0.2"
     }
   }
 }
@@ -45,7 +45,7 @@ resource "random_id" "randomsubscription" {
 
 module "lz_vending" {
   source  = "Azure/lz-vending/azurerm"
-  version = "~>4.1.0" # change this to your desired version, https://www.terraform.io/language/expressions/version-constraints
+  version = "=4.1.0" # change this to your desired version, https://www.terraform.io/language/expressions/version-constraints
 
   # Set the default location for resources
   location = "${var.location}"
@@ -65,19 +65,10 @@ module "lz_vending" {
   subscription_management_group_id                  = "${var.mg_id}"
 
   # virtual network variables
-  virtual_network_enabled = false
-  
-  # resource group variables
-  resource_group_creation_enabled = true
-  resource_groups = {
-    rg1 = {
-      name     = "rg-default"
-      location = "${var.location}"
-    }
-  }
+  #virtual_network_enabled = false
 
   # role assignments
-  role_assignment_enabled = false
+  #role_assignment_enabled = false
 }
 
 resource "azuread_user" "new_user" {
