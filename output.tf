@@ -19,3 +19,13 @@ output "new_user_password" {
   value       = random_password.new_user_password.result
   sensitive   = true
 }
+output "sp_client_id" {
+  description = "Client ID of the created Service Principal."
+  value = azuread_application.app.application_id
+}
+
+output "sp_client_secret" {
+  description = "value of the Service Principal's password."
+  value = azuread_service_principal_password.sp_password.value
+  sensitive = true
+}

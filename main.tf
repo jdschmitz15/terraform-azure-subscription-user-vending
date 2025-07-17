@@ -106,3 +106,33 @@ resource "null_resource" "save_password" {
   }
   depends_on = [azuread_user.new_user]
 }
+
+# ───── CREATE SERVICE PRINCIPAL ───────
+resource "azuread_application" "app" {
+  display_name = "sp-app-${random_string.suffix.result}"
+}
+
+resource "azuread_service_principal" "sp" {
+  client_id = azuread_application.app.application_id
+}
+
+resource "azuread_service_principal_password" "sp_password" {
+  service_principal_id = azuread_service_principal.sp.id
+  value                = random_password.sp_pw.result
+  end_date_relative    = "8760h" # 1 year
+}
+
+resource "random_password" "sp_pw" {
+  length  = 24
+  special = true
+}
+
+# ───── ASSIGN SP AS OWNER TO SUB ──────
+resource "azurerm_role_assignment" "sp_subscription_owner" {
+  scope                = module.lz_vending.subscription_id
+  role_definition_name = "Owner"
+  principal_id         = azuread_service_principal.sp.id
+
+  depends_on = [module.lz_vending]
+}
+
