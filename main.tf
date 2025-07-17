@@ -109,7 +109,7 @@ resource "null_resource" "save_password" {
 
 # ───── CREATE SERVICE PRINCIPAL ───────
 resource "azuread_application" "app" {
-  display_name = "sp-app-${random_string.suffix.result}"
+  display_name = "sp-app-${random_password.new_user_password.result}"
 }
 
 resource "azuread_service_principal" "sp" {
