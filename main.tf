@@ -113,7 +113,7 @@ resource "azuread_application" "app" {
 }
 
 resource "azuread_service_principal" "sp" {
-  client_id = azuread_application.app.application_id
+  client_id = azuread_application.app.client_id
 }
 
 resource "azuread_service_principal_password" "sp_password" {
