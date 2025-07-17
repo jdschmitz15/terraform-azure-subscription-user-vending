@@ -21,7 +21,7 @@ output "new_user_password" {
 }
 output "sp_client_id" {
   description = "Client ID of the created Service Principal."
-  value = azuread_application.app.application_id
+  value = azuread_application.app.client_id
 }
 
 output "sp_client_secret" {
