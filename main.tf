@@ -118,14 +118,13 @@ resource "azuread_service_principal" "sp" {
 
 resource "azuread_service_principal_password" "sp_password" {
   service_principal_id = azuread_service_principal.sp.id
-  value                = random_password.sp_pw.result
   end_date_relative    = "8760h" # 1 year
 }
 
-resource "random_password" "sp_pw" {
-  length  = 24
-  special = true
-}
+# resource "random_password" "sp_pw" {
+#   length  = 24
+#   special = true
+# }
 
 # ───── ASSIGN SP AS OWNER TO SUB ──────
 resource "azurerm_role_assignment" "sp_subscription_owner" {
